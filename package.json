@@ -2,13 +2,14 @@
   "name": "nodebootstraper",
   "version": "0.0.2",
   "dependencies": {
+    "body-parser": "*",
     "express": "*",
     "jade": "*",
-    "stylus": "*",
-	"serve-favicon": "*",
-	"morgan": "*",
-	"body-parser": "*",
-	"method-override": "*"
+    "method-override": "*",
+    "morgan": "*",
+    "serve-favicon": "*",
+    "sqlite3": "^3.0.4",
+    "stylus": "*"
   },
   "engines": {
     "node": "0.10.30",
