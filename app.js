@@ -20,9 +20,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(favicon(__dirname + '/public/images/ftc_logo_fav.png'));
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.use(express.bodyParser());
 // app.use(multer()); // for parsing multipart/form-data
 app.use(methodOverride('_method'));
 app.use(require('stylus').middleware(__dirname + '/public'));
@@ -59,25 +57,39 @@ db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='posts'",
 app.get('/', function(req, res) {
     db.all('SELECT * FROM posts ORDER BY title', function(err, row) {
         if (err !== null) {
+
             res.send(500, "An error has occurred -- " + err);
         } else {
             console.log(row);
             res.render('index.jade', {
                 posts: row
             }, function(err, html) {
-                res.send(200, html);
+                res.status(200).send(html);
+                // res.send(200, html);
             });
         }
     });
-};);
+});
+
+app.post('/add', function(req, res) {
+    title = req.body.title;
+    post = req.body.post;
+    url = req.body.url;
+    sqlRequest = "INSERT INTO 'posts' (title, post, url) VALUES('" + title + "', '" + post + "', '" + url + "')"
+    db.run(sqlRequest, function(err) {
+        if (err !== null) {
+            res.send(500, "An error has occurred -- " + err);
+        } else {
+            res.redirect('back');
+        }
+    });
+});
 
 app.get('/about', function(req, res) {
     res.send('Hello World!');
 });
 
-app.get('/files', function(req, res) {
-
-});
+app.get('/', routes.index);
 
 // **************server start****************
 http.createServer(app).listen(app.get('port'), function() {

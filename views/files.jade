@@ -1,0 +1,20 @@
+div.container
+	ul
+	- for(post in posts) {
+	    li
+		    a(href=posts[post].url)= posts[post].title
+		    | &nbsp;- (
+		    a(href="delete/#{posts[post].id}") delete
+		    | )
+	- }
+		ul.pagination.pagination-centered
+			li.first
+				a(href='#') &laquo;
+			li
+				a(href='#') 1
+			li
+				a(href='#') 2
+			li
+				a(href='#') 3
+			li.last
+				a(href='#') &raquo;

@@ -3,23 +3,21 @@ block content
 	div.container
 		h1 Новостная лента
 		p всегда актуально
-		div.container
-			ul
-	        - for(post in posts) {
-	            li
-				    a(href=posts[post].url)= posts[post].title
-				    | &nbsp;- (
-				    a(href="delete/#{posts[post].id}") delete
-				    | )
-	        - }
-			ul.pagination.pagination-centered
-				li.first
-					a(href='#') &laquo;
+		ul
+			- for(post in posts) {
 				li
-					a(href='#') 1
-				li
-					a(href='#') 2
-				li
-					a(href='#') 3
-				li.last
-					a(href='#') &raquo;
+					a(href=posts[post].url)= posts[post].title
+					| &nbsp;- (
+					a(href=posts[post].url)= posts[post].post
+					| &nbsp;- (
+					a(href="delete/#{bookmarks[bookmark].id}") удалить
+					| )
+			- }
+		form(action="add", method="post")
+			label Заголовок:
+			input(type="text", name="title")
+			label Сообщение:
+			input(type="text", name="post")
+			label Путь к файлу:
+			input(type="text", name="url")
+			input(type="submit", value="Добавить сообщение")
